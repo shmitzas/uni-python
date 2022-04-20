@@ -1,1 +1,0 @@
-shows_links = self.parse_url(shows_url)

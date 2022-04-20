@@ -1,14 +1,10 @@
-# import time
 import os
 import json
-from parso import parse
 import requests
 from bs4 import BeautifulSoup as BS
-# from multiprocessing import Process, Pool, freeze_support
-# import threading
 
 
-class ParseRequests(object):
+class ScrapeData(object):
     def __init__(self):
         shows_url = 'https://www.imdb.com/chart/toptv/?ref_=nv_tvv_250'
         movies_url = 'https://www.imdb.com/chart/top/?ref_=nv_mv_250'
@@ -26,7 +22,6 @@ class ParseRequests(object):
             counter += 1
             print('Parsed {} / {}'.format(counter, to_parse))
 
-
         filename = os.path.dirname(__file__) + '/data.json'
         with open(filename, 'w') as file:
             json.dump(save_list, file, indent=4)
@@ -38,8 +33,8 @@ class ParseRequests(object):
         soup = BS(req.content, 'html.parser')
         titles = soup.findAll('td', class_='titleColumn')
         for item in titles:
-            if count < 5:
-                parsed_list.append('https://www.imdb.com'+item.a.get('href'))
+            if count < 50:
+                parsed_list.append('https://www.imdb.com' + item.a.get('href'))
                 count += 1
         return parsed_list
 
@@ -72,29 +67,33 @@ class ParseRequests(object):
             parsed_dict['year'] = int(split[0])
         else:
             parsed_dict['year'] = int(year)
-        rating = soup.findAll(class_='sc-7ab21ed2-1 jGRxWM')[0].text
+        rating = soup.findAll(
+            class_='sc-7ab21ed2-1 jGRxWM')[0].text
         parsed_dict['rating'] = float(rating)
-        genre = data[0].find_all('a', class_='sc-16ede01-3 bYNgQ ipc-chip ipc-chip--on-baseAlt')
+        genre = data[0].find_all(
+            'a', class_='sc-16ede01-3 bYNgQ ipc-chip ipc-chip--on-baseAlt')
         tmp_genre = []
         for item in genre:
             tmp_genre.append(item.text)
         parsed_dict['genre'] = tmp_genre
 
         if show == True:
-            browse = data[0].findAll(class_='sc-93b8eec8-4 dDCqHi')[0] # seasons div
-            try: 
-                seasons = browse.findAll(class_='ipc-button__text')[1].text # single season
+            browse = data[0].findAll(
+                class_='sc-93b8eec8-4 dDCqHi')[0]  # seasons div
+            try:
+                seasons = browse.findAll(
+                    class_='ipc-button__text')[1].text  # single season
                 split = seasons.split()
                 parsed_dict['seasons'] = int(split[0])
             except IndexError:
-                seasons = browse.findAll('label', {'for':'browse-episodes-season'})[0].text # multiple seasons
+                seasons = browse.findAll(
+                    'label', {'for': 'browse-episodes-season'})[0].text  # multiple seasons
                 split = seasons.split()
                 parsed_dict['seasons'] = int(split[0])
 
-            episodes =  data[0].findAll('div', {'data-testid':'episodes-header'})[0].h3.span.text
+            episodes = data[0].findAll(
+                'div', {'data-testid': 'episodes-header'})[0].h3.span.text
             parsed_dict['episodes'] = int(episodes)
             return(parsed_dict)
         else:
             return(parsed_dict)
-
-ParseRequests()

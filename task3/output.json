@@ -1,0 +1,424 @@
+{
+    "Newest movies": [
+        {
+            "title": "The Dark Knight ",
+            "year": 2008,
+            "rating": 9.0,
+            "genre": [
+                "Action",
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Shawshank Redemption ",
+            "year": 1994,
+            "rating": 9.3,
+            "genre": [
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Godfather: Part II ",
+            "year": 1974,
+            "rating": 9.0,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Godfather ",
+            "year": 1972,
+            "rating": 9.2,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "12 Angry Men ",
+            "year": 1957,
+            "rating": 9.0,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        }
+    ],
+    "Top rated movies": [
+        {
+            "title": "The Shawshank Redemption ",
+            "year": 1994,
+            "rating": 9.3,
+            "genre": [
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Godfather ",
+            "year": 1972,
+            "rating": 9.2,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Dark Knight ",
+            "year": 2008,
+            "rating": 9.0,
+            "genre": [
+                "Action",
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Godfather: Part II ",
+            "year": 1974,
+            "rating": 9.0,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "12 Angry Men ",
+            "year": 1957,
+            "rating": 9.0,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        }
+    ],
+    "Top 10 movies": [
+        {
+            "title": "The Shawshank Redemption ",
+            "year": 1994,
+            "rating": 9.3,
+            "genre": [
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Godfather ",
+            "year": 1972,
+            "rating": 9.2,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Dark Knight ",
+            "year": 2008,
+            "rating": 9.0,
+            "genre": [
+                "Action",
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Godfather: Part II ",
+            "year": 1974,
+            "rating": 9.0,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "12 Angry Men ",
+            "year": 1957,
+            "rating": 9.0,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        }
+    ],
+    "Newest 10 movies": [
+        {
+            "title": "The Dark Knight ",
+            "year": 2008,
+            "rating": 9.0,
+            "genre": [
+                "Action",
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Shawshank Redemption ",
+            "year": 1994,
+            "rating": 9.3,
+            "genre": [
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Godfather: Part II ",
+            "year": 1974,
+            "rating": 9.0,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "The Godfather ",
+            "year": 1972,
+            "rating": 9.2,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        },
+        {
+            "title": "12 Angry Men ",
+            "year": 1957,
+            "rating": 9.0,
+            "genre": [
+                "Crime",
+                "Drama"
+            ]
+        }
+    ],
+    "Avarage movie rating from 2000": 9.0,
+    "Newest shows": [
+        {
+            "title": "Chernobyl ",
+            "year": 2019,
+            "rating": 9.4,
+            "genre": [
+                "Drama",
+                "History",
+                "Thriller"
+            ],
+            "seasons": 1,
+            "episodes": 5
+        },
+        {
+            "title": "Planet Earth II ",
+            "year": 2016,
+            "rating": 9.5,
+            "genre": [
+                "Documentary"
+            ],
+            "seasons": 1,
+            "episodes": 6
+        },
+        {
+            "title": "Breaking Bad ",
+            "year": 2008,
+            "rating": 9.5,
+            "genre": [
+                "Crime",
+                "Drama",
+                "Thriller"
+            ],
+            "seasons": 5,
+            "episodes": 62
+        },
+        {
+            "title": "Planet Earth ",
+            "year": 2006,
+            "rating": 9.4,
+            "genre": [
+                "Documentary"
+            ],
+            "seasons": 1,
+            "episodes": 11
+        },
+        {
+            "title": "Band of Brothers ",
+            "year": 2001,
+            "rating": 9.4,
+            "genre": [
+                "Drama",
+                "History",
+                "War"
+            ],
+            "seasons": 1,
+            "episodes": 10
+        }
+    ],
+    "Top rated shows": [
+        {
+            "title": "Planet Earth II ",
+            "year": 2016,
+            "rating": 9.5,
+            "genre": [
+                "Documentary"
+            ],
+            "seasons": 1,
+            "episodes": 6
+        },
+        {
+            "title": "Breaking Bad ",
+            "year": 2008,
+            "rating": 9.5,
+            "genre": [
+                "Crime",
+                "Drama",
+                "Thriller"
+            ],
+            "seasons": 5,
+            "episodes": 62
+        },
+        {
+            "title": "Planet Earth ",
+            "year": 2006,
+            "rating": 9.4,
+            "genre": [
+                "Documentary"
+            ],
+            "seasons": 1,
+            "episodes": 11
+        },
+        {
+            "title": "Band of Brothers ",
+            "year": 2001,
+            "rating": 9.4,
+            "genre": [
+                "Drama",
+                "History",
+                "War"
+            ],
+            "seasons": 1,
+            "episodes": 10
+        },
+        {
+            "title": "Chernobyl ",
+            "year": 2019,
+            "rating": 9.4,
+            "genre": [
+                "Drama",
+                "History",
+                "Thriller"
+            ],
+            "seasons": 1,
+            "episodes": 5
+        }
+    ],
+    "Top 10 shows": [
+        {
+            "title": "Planet Earth II ",
+            "year": 2016,
+            "rating": 9.5,
+            "genre": [
+                "Documentary"
+            ],
+            "seasons": 1,
+            "episodes": 6
+        },
+        {
+            "title": "Breaking Bad ",
+            "year": 2008,
+            "rating": 9.5,
+            "genre": [
+                "Crime",
+                "Drama",
+                "Thriller"
+            ],
+            "seasons": 5,
+            "episodes": 62
+        },
+        {
+            "title": "Planet Earth ",
+            "year": 2006,
+            "rating": 9.4,
+            "genre": [
+                "Documentary"
+            ],
+            "seasons": 1,
+            "episodes": 11
+        },
+        {
+            "title": "Band of Brothers ",
+            "year": 2001,
+            "rating": 9.4,
+            "genre": [
+                "Drama",
+                "History",
+                "War"
+            ],
+            "seasons": 1,
+            "episodes": 10
+        },
+        {
+            "title": "Chernobyl ",
+            "year": 2019,
+            "rating": 9.4,
+            "genre": [
+                "Drama",
+                "History",
+                "Thriller"
+            ],
+            "seasons": 1,
+            "episodes": 5
+        }
+    ],
+    "Newest 10 shows": [
+        {
+            "title": "Chernobyl ",
+            "year": 2019,
+            "rating": 9.4,
+            "genre": [
+                "Drama",
+                "History",
+                "Thriller"
+            ],
+            "seasons": 1,
+            "episodes": 5
+        },
+        {
+            "title": "Planet Earth II ",
+            "year": 2016,
+            "rating": 9.5,
+            "genre": [
+                "Documentary"
+            ],
+            "seasons": 1,
+            "episodes": 6
+        },
+        {
+            "title": "Breaking Bad ",
+            "year": 2008,
+            "rating": 9.5,
+            "genre": [
+                "Crime",
+                "Drama",
+                "Thriller"
+            ],
+            "seasons": 5,
+            "episodes": 62
+        },
+        {
+            "title": "Planet Earth ",
+            "year": 2006,
+            "rating": 9.4,
+            "genre": [
+                "Documentary"
+            ],
+            "seasons": 1,
+            "episodes": 11
+        },
+        {
+            "title": "Band of Brothers ",
+            "year": 2001,
+            "rating": 9.4,
+            "genre": [
+                "Drama",
+                "History",
+                "War"
+            ],
+            "seasons": 1,
+            "episodes": 10
+        }
+    ],
+    "Avarage show rating from 2000": 9.44
+}
