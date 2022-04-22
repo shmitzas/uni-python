@@ -1,2 +1,3 @@
 /task1/apache_logs.txt
-pycache
+__pycache__
+*.json

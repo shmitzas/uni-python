@@ -1,28 +1,13 @@
-import json
 import os
-
-class Movies(object):
-    def __init__(self, title, year, rating, genre):
-        self.title = title
-        self.year = year
-        self.rating = rating
-        self.genre = genre
-
-class Shows(object):
-    def __init__(self, title, year, rating, genre, seasons, episodes):
-        self.title = title
-        self.year = year
-        self.rating = rating
-        self.genre = genre
-        self.seasons = seasons
-        self.episodes = episodes
-
+import json
+from task2_package.movies import *
+from task2_package.shows import *
 
 class SaveManager(object):
     def load_data(self):
         movies = []
         tv_shows = []
-        filename = os.path.dirname(__file__) + '/' + 'data.json'
+        filename = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '/data.json'
         try:
             if os.stat(filename).st_size > 0:
                 with open(filename, encoding="utf-8") as file:
@@ -50,7 +35,7 @@ class SaveManager(object):
     
     save_dict = {}
     def save_data(self, data, data_name, write):
-        filename = os.path.dirname(__file__) + '/output.json'
+        filename = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '/output.json'
         output_data = []
         test_float = 1.2
         if type(data) is not type(test_float):
