@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     start = time.time()
     print('Starting parsing without multi-processing...')
-    # ScrapeSimple()
+    ScrapeSimple()
     print('Simple scraping took:', round(time.time() - start, 2))
 
     start = time.time()
