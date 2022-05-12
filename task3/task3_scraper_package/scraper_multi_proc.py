@@ -30,7 +30,7 @@ class ScrapeData(object):
 
     def parse_url(self, movies_url, shows_url):
         count = 0
-        limit = 50
+        limit = 100
         parsed_list = []
         req = requests.get(movies_url)
         soup = BS(req.content, 'html.parser')
@@ -59,7 +59,7 @@ class ScrapeData(object):
 
     def parse_items(self, to_parse, queue):
         parsed_dict = {}
-        print('Parsing: {}/50'.format(to_parse['id']+1))
+        print('Parsing: {}/200 | link: {}'.format(to_parse['id']+1, to_parse['link']))
         if to_parse['category'] == 'movie':
             parsed_dict['category'] = 'movie'
         else:
@@ -104,13 +104,19 @@ class ScrapeData(object):
                 split = seasons.split()
                 parsed_dict['seasons'] = int(split[0])
             except IndexError:
-                seasons = browse.findAll(
-                    'label', {'for': 'browse-episodes-season'})[0].text  # multiple seasons
-                split = seasons.split()
-                parsed_dict['seasons'] = int(split[0])
+                try:
+                    seasons = browse.findAll(
+                        'label', {'for': 'browse-episodes-season'})[0].text  # multiple seasons
+                    split = seasons.split()
+                    parsed_dict['seasons'] = int(split[0])
+                except IndexError:
+                    parsed_dict['seasons'] = 1
 
-            episodes = data[0].findAll(
+            try:
+                episodes = data[0].findAll(
                 'div', {'data-testid': 'episodes-header'})[0].h3.span.text
-            parsed_dict['episodes'] = int(episodes)
-
+                parsed_dict['episodes'] = int(episodes)
+            except IndexError:
+                print(to_parse['link'])
+        print('Done: {}/200 | link: {}'.format(to_parse['id']+1, to_parse['link']))
         queue.put(parsed_dict)

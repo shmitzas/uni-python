@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Movies/Shows - DB</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="./src/assets/styles.css"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+  <script src="https://kit.fontawesome.com/9d1d9a82d2.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="display-4">Filmai, serialai</h1>
+    </div>
+    <h1>Movies</h1>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Year</th>
+          <th scope="col">Rating</th>
+          <th scope="col">Genre</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in movies %}
+        <tr>
+          <th scope="row">{{ item[0]}}</th>
+          <td>{{ item[1]}}</td>
+          <td>{{ item[2] }}</td>
+          <td>{{ item[3] }}</td>
+          <td>{{ item[4] }}</td>
+          <td><button type="button" class="btn btn-danger">X</button></td>
+        </tr>
+        
+        {%endfor%}
+      </tbody>
+    </table>
+    <div>
+      <input type="text" name="ID" id="movie_id">
+      <input type="text" name="Title" id="movie_title">
+      <input type="text" name="Year" id="movie_year">
+      <input type="text" name="Rating" id="movie_rating">
+      <input type="text" name="Genre" id="movie_genre">
+      <button type="button" class="btn btn-primary">Add a movie</button>
+    </div>
+    <hr>
+
+    <h1>Shows</h1>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Year</th>
+          <th scope="col">Rating</th>
+          <th scope="col">Genre</th>
+          <th scope="col">Seasons</th>
+          <th scope="col">Episodes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in shows %}
+        <tr>
+          <th scope="row">{{ item[0]}}</th>
+          <td>{{ item[1]}}</td>
+          <td>{{ item[2] }}</td>
+          <td>{{ item[3] }}</td>
+          <td>{{ item[4] }}</td>
+          <td>{{ item[5] }}</td>
+          <td>{{ item[6] }}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
