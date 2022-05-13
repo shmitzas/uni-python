@@ -30,28 +30,32 @@ except KeyError:
 
 db_locale = os.path.dirname(__file__)+'\msdb.db'
 
-conn = sqlite3.connect(db_locale)
-c = conn.cursor()
-c.execute('SELECT * FROM movies')
-movies = c.fetchall()
-print('\n----- Movies -----\n', movies)
-c.execute('SELECT * FROM shows')
-shows = c.fetchall()
-print('\n----- Shows -----\n', shows)
+def checkData():
+    conn = sqlite3.connect(db_locale)
+    c = conn.cursor()
+    c.execute('SELECT * FROM movies')
+    movies = c.fetchall()
+    print('\n----- Movies -----\n', movies)
+    c.execute('SELECT * FROM shows')
+    shows = c.fetchall()
+    print('\n----- Shows -----\n', shows)
 
-conn.commit()
-conn.close()
+    conn.commit()
+    conn.close()
 
-# conn = sqlite3.connect(db_locale)
-# c = conn.cursor()
+def popData():
+    conn = sqlite3.connect(db_locale)
+    c = conn.cursor()
 
-# for item in shows:
-#     c.execute('INSERT INTO shows(title, year, rating, genre, seasons, episodes) VALUES("{}", "{}", "{}", "{}", "{}", "{}")'.format(str(
-#         item['title']), int(item['year']), str(item['rating']), str(item['genre']), int(item['seasons']), int(item['episodes'])))
+    for item in shows:
+        c.execute('INSERT INTO shows(title, year, rating, genre, seasons, episodes) VALUES("{}", "{}", "{}", "{}", "{}", "{}")'.format(str(
+            item['title']), int(item['year']), str(item['rating']), str(item['genre']), int(item['seasons']), int(item['episodes'])))
 
-# for item in movies:
-#     c.execute('INSERT INTO movies(title, year, rating, genre) VALUES("{}", "{}", "{}", "{}")'.format(
-#         str(item['title']), int(item['year']), str(item['rating']), str(item['genre'])))
+    for item in movies:
+        c.execute('INSERT INTO movies(title, year, rating, genre) VALUES("{}", "{}", "{}", "{}")'.format(
+            str(item['title']), int(item['year']), str(item['rating']), str(item['genre'])))
 
-# conn.commit()
-# conn.close()
+    conn.commit()
+    conn.close()
+
+popData()

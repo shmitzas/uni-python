@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Movies/Shows - DB</title>
+  <title>MSDB</title>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -18,8 +18,9 @@
 
 <body>
   <div class="container">
-    <div class="jumbotron">
-      <h1 class="display-4">Filmai, serialai</h1>
+    <div class="mb-5 mt-2">
+      <h1 class="text-center display-1">Movies and Shows DB</h1>
+      <p class="text-center">A place for finding the most popular movies and shows</p>
     </div>
     <h1>Movies</h1>
     <table class="table">
@@ -41,16 +42,25 @@
           <td>{{ item[2] }}</td>
           <td>{{ item[3] }}</td>
           <td>{{ item[4] }}</td>
-          <td><button type="button" class="btn btn-danger">X</button></td>
+          <form action="{{url_for('index')}}" method="POST"><td>
+            <input type="hidden" name="action" value="remove">
+            <input type="hidden" name="category" value="movie">
+            <input type="hidden" name="id" value={{item[0]}}>
+            <button type="submit" class="btn btn-danger">X</button></td>
+          </form>
         </tr>
         {%endfor%}
         <tr>
-          <td><input type="text" name="ID" id="movie_id"></td>
-          <td><input type="text" name="Title" id="movie_title"></td>
-          <td><input type="text" name="Year" id="movie_year"></td>
-          <td><input type="text" name="Rating" id="movie_rating"></td>
-          <td><input type="text" name="Genre" id="movie_genre"></td>
-          <td><button type="button" class="btn btn-primary">Add</button></td>
+          <form action="{{url_for('index')}}" method="POST">
+            <td><div></div></td>
+            <input type="hidden" name="action" value="add">
+            <input type="hidden" name="category" value="movie">
+            <td><input type="text" name="title" id="movie_title"></td>
+            <td><input type="text" name="year" id="movie_year"></td>
+            <td><input type="text" name="rating" id="movie_rating"></td>
+            <td><input type="text" name="genre" id="movie_genre"></td>
+            <td><button type="submit" class="btn btn-primary">Add</button></td>
+          </form>
         </tr>
       </tbody>
     </table>
@@ -78,18 +88,27 @@
           <td>{{ item[4] }}</td>
           <td>{{ item[5] }}</td>
           <td>{{ item[6] }}</td>
-          <td><button type="button" class="btn btn-danger">X</button></td>
+          <form action="{{url_for('index')}}" method="POST"><td>
+            <input type="hidden" name="action" value="remove">
+            <input type="hidden" name="category" value="show">
+            <input type="hidden" name="id" value={{item[0]}}>
+            <button type="submit" class="btn btn-danger">X</button></td>
+          </form>
         </tr>
         {%endfor%}
         <tr>
-          <td><input type="text" name="ID" id="show_id"></td>
-          <td><input type="text" name="Title" id="show_title"></td>
-          <td><input type="text" name="Year" id="show_year"></td>
-          <td><input type="text" name="Rating" id="show_rating"></td>
-          <td><input type="text" name="Genre" id="show_genre"></td>
-          <td><input type="text" name="Seasons" id="show_seasons"></td>
-          <td><input type="text" name="Episodes" id="show_episodes"></td>
-          <td><button type="button" class="btn btn-primary">Add</button></td>
+          <form action="{{url_for('index')}}" method="POST">
+            <td><div></div></td>
+            <input type="hidden" name="action" value="add">
+            <input type="hidden" name="category" value="show">
+            <td><input type="text" name="title" id="show_title"></td>
+            <td><input type="text" name="year" id="show_year"></td>
+            <td><input type="text" name="rating" id="show_rating"></td>
+            <td><input type="text" name="genre" id="show_genre"></td>
+            <td><input type="text" name="seasons" id="show_seasons"></td>
+            <td><input type="text" name="episodes" id="show_episodes"></td>
+            <td><button type="submit" class="btn btn-primary">Add</button></td>
+          </form>
         </tr>
       </tbody>
     </table>
