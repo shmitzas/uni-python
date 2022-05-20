@@ -1,120 +1,230 @@
+from distutils.log import error
+import sys
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import os
 import re
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 db_locale = os.path.dirname(__file__)+'\db\msdb.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_locale
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+db = SQLAlchemy(app)
+
+
+class Movies(db.Model):
+    __tablename__ = 'movies'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String)
+    year = db.Column(db.Integer)
+    rating = db.Column(db.String)
+    genre = db.Column(db.String)
+
+
+class Shows(db.Model):
+    __tablename__ = 'shows'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String)
+    year = db.Column(db.Integer)
+    rating = db.Column(db.String)
+    genre = db.Column(db.String)
+    seasons = db.Column(db.Integer)
+    episodes = db.Column(db.Integer)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     movies, shows = getData()
+
     if request.method == 'POST':
-        if request.form['action'] == 'add':
-            addItem(request.form, movies, shows)
+        if request.form['action'] == 'update':
+            try:
+                data = {
+                'id': request.form['id'],
+                'title': request.form['title'],
+                'year': request.form['year'],
+                'rating': request.form['rating'],
+                'genre': request.form['genre']
+                }
+                if request.form['category'] == 'show':
+                    data['seasons'] = request.form['seasons']
+                    data['episodes'] = request.form['episodes']
+            except:
+                print("Unexpected error:", sys.exc_info()[0])
+                raise
+
+            updateItem(data, request.form['category'])
+            return redirect(url_for('index'))
+        elif request.form['action'] == 'add':
+            try:
+                data = {
+                    'title': request.form['title'],
+                    'year': request.form['year'],
+                    'rating': request.form['rating'],
+                    'genre': request.form['genre']
+                }
+                if request.form['category'] == 'show':
+                    data['seasons'] = request.form['seasons']
+                    data['episodes'] = request.form['episodes']
+            except:
+                print("Unexpected error:", sys.exc_info()[0])
+                raise
+
+            addItem(data, request.form['category'])
+            return redirect(url_for('index'))
+        elif request.form['action'] == 'remove':
+            removeItem(request.form['id'], request.form['category'])
+            return redirect(url_for('index'))
+        elif request.form['action'] == 'search':
+            movies_q, shows_q = fromSearch(request.form['search'])
+            print(movies_q, shows_q)
+            return render_template('index.html', movies=movies_q, shows=shows_q)
         else:
-            removeItem(request.form['id'], request.form['category'], len(movies)-1, len(shows)-1)
+            return redirect(url_for('index'))
+    else:
+        redirect(url_for('index'))
+        return render_template('index.html', movies=movies, shows=shows)
+
+
+@app.route('/edit/<req_id>', methods=['GET', 'POST'])
+def edit(req_id):
+    if request.method == 'POST':
+        cat = request.form['category']
+        if cat != None and cat == 'movie':
+            data = refactorItem(Movies.query.filter_by(id=req_id).first())
+            return render_template('edit.html', data=data)
+        elif cat != None and cat == 'show':
+            data = refactorItem(Shows.query.filter_by(id=req_id).first())
+            return render_template('edit.html', data=data, category='show')
+    else:
         return redirect(url_for('index'))
-    return render_template('index.html', movies=movies, shows=shows)
 
 
 def getData():
-    db_locale = os.path.dirname(__file__)+'\db\msdb.db'
-    conn = sqlite3.connect(db_locale)
-    c = conn.cursor()
-    c.execute('SELECT * FROM movies')
-    get_movies = c.fetchall()
-    c.execute('SELECT * FROM shows')
-    get_shows = c.fetchall()
-
-    conn.commit()
-    conn.close()
-
+    get_movies = Movies.query.filter().all()
+    get_shows = Shows.query.filter().all()
     movies, shows = refactorGET(get_movies, get_shows)
-
     return movies, shows
 
 
 def refactorGET(movies, shows):
-    proc_movies = []
-    proc_shows = []
     for item in movies:
-        genre_list = re.findall(r"'(.*?)'", item[4])
+        genre_list = re.findall(r"'(.*?)'", item.genre)
         genre = ''
         for string in genre_list:
             genre += string + ', '
         genre = genre[:-2]
-        tmp_list = []
-        tmp_list.append(item[0])
-        tmp_list.append(item[1])
-        tmp_list.append(item[2])
-        tmp_list.append(item[3])
-        tmp_list.append(genre)
-        proc_movies.append(tmp_list)
+        item.genre = genre
 
     for item in shows:
-        genre_list = re.findall(r"'(.*?)'", item[4])
+        genre_list = re.findall(r"'(.*?)'", item.genre)
         genre = ''
         for string in genre_list:
             genre += string + ', '
         genre = genre[:-2]
-        tmp_list = []
-        tmp_list.append(item[0])
-        tmp_list.append(item[1])
-        tmp_list.append(item[2])
-        tmp_list.append(item[3])
-        tmp_list.append(genre)
-        tmp_list.append(item[5])
-        tmp_list.append(item[6])
-        proc_shows.append(tmp_list)
-    return proc_movies, proc_shows
+        item.genre = genre
+    return movies, shows
 
 
-def addItem(data, movies_org, shows_org):
-    to_save = {}
-    conn = sqlite3.connect(db_locale)
-    c = conn.cursor()
+def refactorItem(data):
+    genre_list = re.findall(r"'(.*?)'", data.genre)
+    genre = ''
+    for string in genre_list:
+        genre += string + ', '
+    genre = genre[:-2]
+    data.genre = genre
+    return data
 
-    if '' not in data.values():
-        if data['category'] == 'movie':
-            to_save['id'] = int(movies_org[len(movies_org)-1][0] + 1)
-            to_save['title'] = str(data['title'])
-            to_save['year'] = int(data['year'])
-            to_save['rating'] = str(data['rating'])
-            to_save['genre'] = str(list(data['genre'].split(', ')))
-            c.execute('INSERT INTO movies(title, year, rating, genre) VALUES("{}", "{}", "{}", "{}")'.format(
-                str(to_save['title']), int(to_save['year']), str(to_save['rating']), str(to_save['genre'])))
-        elif data['category'] == 'show':
-            to_save['id'] = int(shows_org[len(shows_org)-1][0] + 1)
-            to_save['title'] = str(data['title'])
-            to_save['year'] = int(data['year'])
-            to_save['rating'] = str(data['rating'])
-            to_save['genre'] = str(list(data['genre'].split(', ')))
-            to_save['seasons'] = int(data['seasons'])
-            to_save['episodes'] = int(data['episodes'])
-            c.execute('INSERT INTO shows(title, year, rating, genre, seasons, episodes) VALUES("{}", "{}", "{}", "{}", "{}", "{}")'.format(str(
-                to_save['title']), int(to_save['year']), str(to_save['rating']), str(to_save['genre']), int(to_save['seasons']), int(to_save['episodes'])))
-        else:
-            print('Unknown category: {}'.format(data['category']))
+
+def fromSearch(search):
+    search = '%{}%'.format(search)
+    try:
+        get_movies = Movies.query.filter(Movies.title.like(search)).all()
+        get_shows = Shows.query.filter(Shows.title.like(search)).all()
+        movies, shows = refactorGET(get_movies, get_shows)
+        return movies, shows
+    except:
+            print("Unexpected error:", sys.exc_info()[0])
+            raise
+
+
+def addItem(data, category):
+    genres = []
+    genres_split = data['genre'].split(', ')
+    for item in genres_split:
+        genres.append(item)
+    data['genre'] = genres
+
+    if category == 'show':
+        show = Shows()
+        show.title = str(data['title'])
+        show.year = int(data['year'])
+        show.rating = str(data['rating'])
+        show.genre = str(genres)
+        show.seasons = int(data['seasons'])
+        show.episodes = int(data['episodes'])
+        try:
+            db.session.add(show)
+            db.session.commit()
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            raise
     else:
-        print('POST is empty', data)
-    conn.commit()
-    conn.close()
+        movie = Movies()
+        movie.title = str(data['title'])
+        movie.year = int(data['year'])
+        movie.rating = str(data['rating'])
+        movie.genre = str(genres)
+        try:
+            db.session.add(movie)
+            db.session.commit()
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            raise
 
 
-def removeItem(id, category, movie_count, show_count):
-    conn = sqlite3.connect(db_locale)
-    c = conn.cursor()
+def removeItem(id, category):
+    print(id, category)
     if category == 'movie':
-        c.execute('DELETE FROM movies WHERE id = {};'.format(id))
-        c.execute('UPDATE SQLITE_SEQUENCE SET seq = {} WHERE NAME = "movies";'.format(movie_count))
+        db.session.query(Movies).filter(Movies.id == id).delete()
+        db.session.commit()
     elif category == 'show':
-        c.execute('DELETE FROM shows WHERE id = {};'.format(id))
-        c.execute('UPDATE SQLITE_SEQUENCE SET seq = {} WHERE NAME = "shows";'.format(show_count))
+        db.session.query(Shows).filter(Shows.id == id).delete()
+        db.session.commit()
 
-    conn.commit()
-    conn.close()
+
+def updateItem(data, category):
+    genres = []
+    genres_split = data['genre'].split(', ')
+    for item in genres_split:
+        genres.append(item)
+    data['genre'] = genres
+
+    if category == 'show':
+        show = Shows.query.filter_by(id=data['id']).first()
+        show.title = str(data['title'])
+        show.year = int(data['year'])
+        show.rating = str(data['rating'])
+        show.genre = str(genres)
+        show.seasons = int(data['seasons'])
+        show.episodes = int(data['episodes'])
+        try:
+            db.session.commit()
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            raise
+    else:
+        movie = Movies.query.filter_by(id=data['id']).first()
+        movie.title = str(data['title'])
+        movie.year = int(data['year'])
+        movie.rating = str(data['rating'])
+        movie.genre = str(genres)
+        try:
+            db.session.commit()
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            raise
 
 
 if __name__ == '__main__':
