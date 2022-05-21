@@ -1,7 +1,5 @@
-from distutils.log import error
 import sys
 from flask import Flask, render_template, request, redirect, url_for
-import sqlite3
 import os
 import re
 from flask_sqlalchemy import SQLAlchemy

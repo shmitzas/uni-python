@@ -43,7 +43,7 @@ def checkData():
     conn.commit()
     conn.close()
 
-def popData():
+def insertData():
     conn = sqlite3.connect(db_locale)
     c = conn.cursor()
 
@@ -58,4 +58,4 @@ def popData():
     conn.commit()
     conn.close()
 
-popData()
+insertData()

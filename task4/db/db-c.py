@@ -30,5 +30,4 @@ CREATE TABLE movies
 """)
 
 conn.commit()
-
 conn.close()
