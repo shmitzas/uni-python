@@ -11,10 +11,8 @@ try:
             from_json = json.load(file)
             for item in from_json:
                 if item['category'] == 'movie':
-                    # movie = (item['title'], item['year'], item['rating'], item['genre'])
                     movies.append(item)
                 elif item['category'] == 'tv-show':
-                    # show = (item['title'], item['year'], item['rating'], item['genre'], item['seasons'], item['episodes'])
                     shows.append(item)
                 else:
                     print("Some item is neither a movie, nor a tv show!")

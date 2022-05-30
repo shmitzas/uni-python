@@ -76,7 +76,6 @@ def index():
             return redirect(url_for('index'))
         elif request.form['action'] == 'search':
             movies_q, shows_q = fromSearch(request.form['search'])
-            print(movies_q, shows_q)
             return render_template('index.html', movies=movies_q, shows=shows_q)
         else:
             return redirect(url_for('index'))
@@ -183,7 +182,6 @@ def addItem(data, category):
 
 
 def removeItem(id, category):
-    print(id, category)
     if category == 'movie':
         db.session.query(Movies).filter(Movies.id == id).delete()
         db.session.commit()
